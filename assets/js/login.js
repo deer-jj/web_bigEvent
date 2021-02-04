@@ -18,7 +18,7 @@ $(function() {
         pwd: [/^[\S]{6,12}$/, '密码必须6到12位，且不能出现空格'],
         // 自定义两次输入密码是否一致的校验规则
         repwd: function(value) {
-            var pwd = $('.reg-box [name=password]').val()
+            var pwd = $('.reg-box input[name=password]').val()
             if (pwd !== value) {
                 return '两次输入的密码不一致!'
             }
@@ -46,27 +46,27 @@ $(function() {
             $('#link-login').click()
         })
 
-        // 监听用户登录表单事件
-        $('#form_login').submit(function(e) {
-            e.preventDefault()
-            $.ajax({
-                url: '/api/login',
-                method: 'POST',
-                // 快速获取表单数据
-                data: $(this).serialize(),
-                success: function(res) {
-                    if (res.status !== 0) {
-                        return layer.msg('登录失败！')
-                    }
-                    layer.msg('登录成功！')
-                        //    将登录成功的token值保存到localStorage中
-                    localStorage.setItem('token', res.token)
-                        // console.log(res.token);
-                        // 跳转到后台主页
-                    location.href = '/index.html'
-                }
-            })
-        })
+    })
 
+    // 监听用户登录表单事件
+    $('#form_login').submit(function(e) {
+        e.preventDefault()
+        $.ajax({
+            url: '/api/login',
+            method: 'POST',
+            // 快速获取表单数据
+            data: $(this).serialize(),
+            success: function(res) {
+                if (res.status !== 0) {
+                    return layer.msg('登录失败！')
+                }
+                layer.msg('登录成功！')
+                    //将登录成功的token值保存到localStorage中
+                localStorage.setItem('token', res.token)
+                    // console.log(res.token);
+                    // 跳转到后台主页
+                location.href = '/index.html'
+            }
+        })
     })
 })
